@@ -3,7 +3,6 @@ import { fetchPhotos } from './api';
 import { photosPerPage } from './api';
 
 const form = document.querySelector('.search-form');
-// const searchInput = document.querySelector('[name="searchQuery"]');
 const searchInput = form.firstElementChild;
 const gallery = document.querySelector('.gallery');
 const loadMoreBtn = gallery.nextElementSibling;
@@ -54,7 +53,6 @@ form.addEventListener('submit', event => {
   if (searchQuery !== '') {
     fetchPhotos(searchQuery)
       .then(response => {
-        console.log(response.data.hits);
         if (response.data.hits.length === 0) {
           Notiflix.Notify.failure(
             'Sorry, there are no images matching your search query. Please try again.'
@@ -66,9 +64,6 @@ form.addEventListener('submit', event => {
           if (response.data.totalHits > pageNumber * photosPerPage) {
             loadMoreBtn.setAttribute('show-btn', 'true');
           }
-          // console.log(response.data.hits);
-
-          console.log(response.data.totalHits);
         }
       })
       .catch(error => {
@@ -85,7 +80,6 @@ loadMoreBtn.addEventListener('click', event => {
   fetchPhotos(searchQuery, pageNumber)
     .then(response => {
       fillGallery(response.data.hits);
-      console.log(response.data.hits, pageNumber);
 
       if (response.data.totalHits > pageNumber * photosPerPage) {
         loadMoreBtn.setAttribute('show-btn', 'true');
